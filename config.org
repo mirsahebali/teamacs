@@ -374,7 +374,7 @@
 "r" '(ranger :wk "Ranger Dired"))
 
 (saheb/leader-keys
-"\'" '(evil-collection-consult-mark :wk "Ranger Dired"))
+"\'" '(evil-collection-consult-mark :wk "Search Marks"))
 
   (saheb/leader-keys
       "b" '(:ignore t :wk "buffer")
@@ -398,7 +398,8 @@
       "h f" '(describe-function :wk "Describe function")
       "h v" '(describe-variable :wk "Describe variable")
       "h e" '(flycheck-list-errors :wk  "List errors in buffer")
-      ;;"h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config"))
+      "h m" '(man :wk  "Man Page")
+     ;;"h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config"))
       "h r r" '(reload-init-file :wk "Reload emacs config"))
 
   (saheb/leader-keys
@@ -484,6 +485,7 @@
 
     (saheb/leader-keys 
         "s" '(:ignore t :wk "Search")
+        "s t" '(hl-todo-rgrep :wk "Grep TODO")
         "s s" '(consult-grep :wk "Consult Grep")
         "s g" '(consult-git-grep :wk "Consult Git Grep"))
 
@@ -543,6 +545,10 @@
 (use-package which-key
     :after (general evil)
     :config
+(setq which-key-min-display-lines 6
+        which-key-side-window-max-height 0.35
+which-key-separator " → "
+which-key-allow-imprecise-window-fit t)        
     (which-key-mode))
 #+end_src
 * Language Support
@@ -731,6 +737,16 @@
   (add-hook 'js-mode-hook 'js2-minor-mode)
   (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 )
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.api\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("/*/.*\\.js[x]?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (use-package web-mode
 :defer t
 :config
@@ -747,8 +763,7 @@
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-)
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)))
 (use-package emmet-mode
 :after web-mode
 :config
@@ -760,6 +775,8 @@
 (add-hook 'sgml-mode-hook 'emmet-preview-mode) ;; Auto-start on any markup modes
 (add-hook 'web-mode-hook 'emmet-preview-mode )
 )
+(use-package lsp-tailwindcss
+:after web-mode)
 #+end_src
 *** Typescript
 #+begin_src emacs-lisp
@@ -979,19 +996,21 @@
 #+begin_src emacs-lisp
 (use-package hl-todo
 :ensure t
+:demand t
 :config
 (setq hl-todo-keyword-faces
-      '(("TODO"   . "#FF0000")
+      '(("TODO"   . "#FFEAB5")
         ("FIXME"  . "#FF0000")
         ("DEBUG"  . "#A020F0")
-        ("GOTCHA" . "#FF4500")
-	    ("NOTE"   . "#00FFEF")
+        ("GOTCHA" . "#05547D")
+        ("NOTE"   . "#00FFEF")
         ("REFACTOR" . "#E4E8FF")
         ("REVIEW". "#FFC0CB")
         ("PERF" . "#7D7EEC")
+        ("INFO" . "#C6E87A")
         ("STUB"   . "#1E90FF")))
 
-        (hl-todo-mode))
+        (global-hl-todo-mode))
 #+end_src
 ** Model line
 #+begin_src emacs-lisp

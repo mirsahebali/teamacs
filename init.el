@@ -27,6 +27,7 @@
    '("4dcf06273c9f5f0e01cea95e5f71c3b6ee506f192d75ffda639d737964e2e14e" "80214de566132bf2c844b9dee3ec0599f65c5a1f2d6ff21a2c8309e6e70f9242" default))
  '(evil-undo-system 'undo-fu)
  '(go-impl-aliases-alist '(("hh" . "http.Handler") ("irw" . "io.ReadWriter")))
+ '(lsp-tailwindcss-emmet-completions t)
  '(lsp-ui-doc-position 'at-point)
  '(org-support-shift-select t))
 (custom-set-faces
